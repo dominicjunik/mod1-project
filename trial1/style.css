@@ -1,0 +1,48 @@
+body {
+    height: 100vh;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content: center;
+
+}
+
+.large-box {    
+    height: 640px;
+    width: 640px;
+    border: 5px solid white;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    gap: 50px;
+    background-color: dimgray;
+}
+
+.cobblestone {
+    background-image: url('tile1.png');
+    height: 64px;
+    width: 64px;
+
+}
+
+.flex-box{
+    height: 640px;
+    width: 640px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    border: 5px solid white;
+}
+.wizard {
+    background-image: url('wizard.png');
+    height: 64px;
+    width: 64px;
+    order: 1;
+}
+
+.moveLeft {
+    height: 32px;
+    width: 32px;    
+}
