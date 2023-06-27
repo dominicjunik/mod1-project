@@ -101,12 +101,19 @@ h1 {
     display: flex;      
 }
 
-.winner {
+.winner {    
     background-color: blueviolet;
-    background-image: url(assets/victory-stars.png);
-    border: none;
+    background-image: url(assets/victory-stars.png);    
+    border: none;    
     pointer-events: none;
+    animation: scroll 4s linear infinite;
 }
+@keyframes scroll {
+    to {
+      background-position: 0 -100px;
+    }
+}
+
 .loser {
     background-color: red;    
     background-image: url(assets/loss-skull.png);
