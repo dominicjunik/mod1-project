@@ -1,6 +1,7 @@
 Under each square is a hidden symbol.
 Each symbol has a twin.
-Click two squares to pair them.
+Click a square to select it.
+Select two squares to pair them.
 Pair all the twins to win.
 Three wrong guesses and you lose.
 

@@ -5,23 +5,46 @@ body {
     flex-direction: column;
     align-items:center;
     /* justify-content: center; */
+    
+}
+
+button {
+    height: 50px;
+    width: 75px;
+    margin: 0px 10px;
+    background-color: red;
+    border: 5px solid black;
+    color: white;
+    border-radius: 10px;
+    font-size: 18px; 
+}
+
+p {
+    font-size: 18px;
+    font-weight: bold;
+    font-family:'Courier New', Courier, monospace
 }
 
 h1 {
-    background-color: dimgray;
-    padding: 20px;    
+    /* background-color: dimgray; */
+    padding: 20px;
+    margin-bottom: 50px;
+    background-color: red;
+    border: 5px solid black;
+    color: white;
+    border-radius: 10px;   
 }
 
 .game-window {
-    margin: 50px;
-    border: 5px solid black;
+    /* margin: 50px; */
+    border: 5px solid black;    
     height: 400px;
     width: 400px;
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: wrap;    
     background-image: url(instructions.png);
     /* user-select disables text highlighting */
-    user-select: none;
+    user-select: none;    
     /* justify-content: space-evenly;
     align-content: space-evenly; */
 }
@@ -41,16 +64,35 @@ h1 {
     line-height: 100px;
     color: white;
     color: transparent;
-    background-color: red;        
+    background-color: red; 
+    font-size: 30px;       
 }
 
 .selected{
     color: black;
     background-color: yellow;
+    pointer-events: none;
+    background-image: url(trial1/wizard.png);
 }
 
 .solved {
     background-color: green;
     pointer-events: none;
     color: transparent;
+    background-image: transparent;
+}
+.horz-aligned {
+    display: flex;      
+}
+
+.winner {
+    background-color: blueviolet;
+    background-image: url(victory-stars.png);
+    border: none;
+    pointer-events: none;
+}
+.loser {
+    background-color: red;    
+    background-image: url(loss-skull.png);
+    pointer-events: none;
 }

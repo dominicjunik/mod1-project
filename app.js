@@ -67,10 +67,6 @@ function shuffle(array) {
     return array;
 }
 
-
-
-
-
 function createTiles() {
     for(let i = 0; i < objectArray.length; i++){
         let parentBox = document.querySelector('.game-window');
@@ -104,6 +100,7 @@ startButton.addEventListener("click", (event) => {
         console.log(objectArray);
         // creates the HTML elements that represent the tiles visually 
         createTiles();
+        keepScore();
     }
     inProgress = true;    
 })
@@ -121,44 +118,106 @@ resetButton.addEventListener("click", () => {
         child = parentBox.lastElementChild;
     }
     inProgress = false;
+    hasClicked = false;
     objectArray = [];
-    console.log(objectArray)
+    console.log(objectArray);
+    victoryCount = 0;
+    remainingTries = 5;
+    keepScore();
+    scoreboard.textContent = '';
 })
 
 
 
 
 // ROUND DESIGN
+
+// these constants are to keey track of the selected events while using one event listener
+let selector1 = {};
+let selector2 = {};
+let key1 = 0;
+let key2 = 0;
+// these booleans keep track of which click is currently active to prevent double clicking the same tile being a success case
+let hasClicked = false;
+let clickedTwice = false;
+
+//these variables keep track of the game and the win/loss conditions 
+let victoryCount = 0;
+let remainingTries = 5;
+//this builds the scoreboard, it will be updated in the game loop and win/loss conditions
+let scoreboard = document.getElementById('score');
+function keepScore(){
+    scoreboard.textContent = `Remaining Tries: ${remainingTries}`;
+}
+
+
+
+
+///////////////////////////
+//     MAIN GAME LOOP    //
+///////////////////////////
 let gameBoard = document.querySelector('.game-window');
 gameBoard.addEventListener('click', (event) => {
-    console.log(event.target.id)
-    //stores the selected div and its key value
-    let selector1 = event.target;
-    let key1 = objectArray[event.target.id].key
-    console.log(key1)
-    console.log('first event.target:')
-    console.dir(event.target)
-    //adds the selected css class to the clicked tile for style   
-    event.target.classList.add('selected')
-    // attempt to listen to second event
-    gameBoard.addEventListener('click', (event) => {
-        console.log('we got here')
-        console.log('second event.target:')
-        console.dir(event)
-        let selector2 = event.target;
-        let key2 = objectArray[event.target.id].key
-        if (key1 === key2){
-            console.log('proper guess')
-            selector1.classList.add('solved')
-            selector2.classList.add('solved')
+    // first click happens
+    if(!hasClicked && !clickedTwice){
+    // enter this as the first loop
+        selector1 = event.target;
+        key1 = objectArray[event.target.id].key;
+        event.target.classList.add('selected')
+        hasClicked = true;
+    }
+    //second click goes here
+    else if(hasClicked){        
+    // we set hasClicked to true at the end of the first click so the second click will go here
+        selector2 = event.target;
+        key2 = objectArray[event.target.id].key;        
+        //adding the .selected to the clicked box
+        event.target.classList.add('selected')
+        //////////////////
+        // pair success //
+        //////////////////               
+        if (key1 === key2){            
+            selector1.classList.add('solved');
+            selector2.classList.add('solved');
+            selector1.classList.remove('selected');
+            selector2.classList.remove('selected');
+            //victory condition logic and display
+            victoryCount++;
+            if(victoryCount === keyArray.length) {
+                let winner = document.querySelectorAll('.solved')
+                console.log(winner)
+                winner.forEach((element) => {
+                    element.classList.add('winner')
+                })
+                scoreboard.textContent = `YOU WIN :)`;
+            }   
+        }            
+        //////////////////
+        // pair failure //
+        ////////////////// 
+        else {
+            selector2.style.pointerEvents = 'all';
+            clickedTwice = true;
+            remainingTries--;
+            keepScore();            
+            event.target.addEventListener('mouseleave', () => {
+                selector1.classList.remove('selected');
+                selector2.classList.remove('selected');
+                selector2.removeAttribute('style')
+                clickedTwice = false;                               
+            }, {once: true});            
+            if(remainingTries === 0) {
+                let loser = document.querySelectorAll('.memory-tile')
+                console.log(loser)
+                loser.forEach((element) => {
+                    element.classList.add('loser')
+                })
+                scoreboard.textContent = `YOU LOSE`;
+            }
         }
-        else{
-            console.log('wrong guess')
-            selector1.classList.remove('selected')
-            selector2.classList.remove('selected')
-
-        }
-    })
+        // reset hasClicked back to false so the first click can start again.
+        hasClicked = false;
+    }      
 });
 
 // thoughts on solution to current problem -- first event saves its target, then runs a function
@@ -181,4 +240,7 @@ gameBoard.addEventListener('click', (event) => {
 // ELSE IF KEYS ARE DIFFERENT
 // update the chances left count (loss condition)
 // transition the tiles back to a preselected state
-
+///////////
+// WHEN WE LOSE
+///////////
+// forEach add skull image background to the memory-tile class and set to no pointer
