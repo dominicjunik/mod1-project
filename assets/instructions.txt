@@ -3,7 +3,7 @@ Each symbol has a twin.
 Click a square to select it.
 Select two squares to pair them.
 Pair all the twins to win.
-Three wrong guesses and you lose.
+Ten wrong guesses and you lose.
 
 How good is your memory?
 

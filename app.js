@@ -24,14 +24,27 @@
 
 // an array to keep track of all the pairs
 // make them objects, each with a key and an image
-let keyArray = [0, 1, 2, 3, 4, 5, 6, 7];
+// let keyArray = [0, 1, 2, 3, 4, 5, 6, 7];
+let keyArray = [
+                    {key: 0, img: 'assets/eye.png'},
+                    {key: 1, img: 'assets/pink-star.png'},
+                    {key: 2, img: 'assets/crown.png'},
+                    {key: 3, img: 'assets/magic-rune.png'},
+                    {key: 4, img: 'assets/flower.png'},
+                    {key: 5, img: 'assets/hourglass.png'},
+                    {key: 6, img: 'assets/cloud.png'},
+                    {key: 7, img: 'assets/watermelon.png'},                    
+                ]
+// console.log(keyArray2)
 
 class memoryObject {
-    constructor(key){
+    constructor(key, img){
         // a key value to check against its paired sibling
         this.key = key;
         // boolean for solved puzzle (not sure this is needed)
         this.solved = false;
+        // an img url to use
+        this.img = img; 
     }
 }
 
@@ -39,11 +52,13 @@ class memoryObject {
 let objectArray = [];
 
 //generating the memory Objects
-function generateBoard(){ 
+function generateLogicBoard(){ 
     for (let i = 0; i < keyArray.length; i++){
-        //pushing 2 objects with the same key value into the objectArray
-        objectArray.push(new memoryObject(keyArray[i]));
-        objectArray.push(new memoryObject(keyArray[i]));
+        //pushing 2 objects with the same key value into the objectArray        
+        // objectArray.push(new memoryObject(keyArray[i]));
+        // objectArray.push(new memoryObject(keyArray[i]));
+        objectArray.push(new memoryObject(keyArray[i].key, keyArray[i].img));
+        objectArray.push(new memoryObject(keyArray[i].key, keyArray[i].img));
     }
 };
 
@@ -63,10 +78,11 @@ function shuffle(array) {
       [array[currentIndex], array[randomIndex]] = [
         array[randomIndex], array[currentIndex]];
     }
-  
+
     return array;
 }
 
+// SPAWN THE MEMORY TILES ON THE GAME WINDOW
 function createTiles() {
     for(let i = 0; i < objectArray.length; i++){
         let parentBox = document.querySelector('.game-window');
@@ -75,15 +91,27 @@ function createTiles() {
         newTile.setAttribute('id', i);
 
         // diagnostic line to show the key-pair directly on the tiles  
-        newTile.innerText = objectArray[i].key;
+        // newTile.innerText = objectArray[i].key;
 
-        parentBox.appendChild(newTile);
-       
-        // newTile.addEventListener( () => roundStart() )
+        parentBox.appendChild(newTile);    
     }
 }
 
-// SPAWN THE MEMORY TILES ON THE GAME WINDOW
+// this function is to add the seleced CSS class and attach an background image to the tile
+function addSelected(selector) {
+    selector.classList.add('selected');
+    // add the background image - we need to get it from the keyArray Object
+    selector.style.backgroundImage = `url('${objectArray[selector.id].img}')`   
+}
+// this funtion is to remove the .selected CSS class and to remove the inline style background img
+function removeSelected(selectorOne, selectorTwo) {
+    selectorOne.classList.remove('selected');
+    selectorOne.removeAttribute('style');
+    selectorTwo.classList.remove('selected');
+    selectorTwo.removeAttribute('style');
+}
+
+
 
 
 //////////////////////////
@@ -94,7 +122,7 @@ let startButton = document.getElementById('start');
 startButton.addEventListener("click", (event) => {
     if(!inProgress){         
         // creates the array of paired tiles
-        generateBoard();
+        generateLogicBoard();
         // randomizes the indexes of the paired tiles
         shuffle(objectArray);
         console.log(objectArray);
@@ -143,7 +171,7 @@ let clickedTwice = false;
 
 //these variables keep track of the game and the win/loss conditions 
 let victoryCount = 0;
-let remainingTries = 5;
+let remainingTries = 10;
 //this builds the scoreboard, it will be updated in the game loop and win/loss conditions
 let scoreboard = document.getElementById('score');
 function keepScore(){
@@ -163,7 +191,8 @@ gameBoard.addEventListener('click', (event) => {
     // enter this as the first loop
         selector1 = event.target;
         key1 = objectArray[event.target.id].key;
-        event.target.classList.add('selected')
+        // adding the .selected to the clicked box
+        addSelected(selector1);
         hasClicked = true;
     }
     //second click goes here
@@ -171,16 +200,16 @@ gameBoard.addEventListener('click', (event) => {
     // we set hasClicked to true at the end of the first click so the second click will go here
         selector2 = event.target;
         key2 = objectArray[event.target.id].key;        
-        //adding the .selected to the clicked box
-        event.target.classList.add('selected')
+        // adding the .selected to the clicked box         
+        addSelected(selector2);        
         //////////////////
         // pair success //
         //////////////////               
         if (key1 === key2){            
             selector1.classList.add('solved');
-            selector2.classList.add('solved');
-            selector1.classList.remove('selected');
-            selector2.classList.remove('selected');
+            selector2.classList.add('solved');            
+            //this function removes the .selected CSS and inline-style
+            removeSelected(selector1, selector2);
             //victory condition logic and display
             victoryCount++;
             if(victoryCount === keyArray.length) {
@@ -201,12 +230,12 @@ gameBoard.addEventListener('click', (event) => {
             remainingTries--;
             keepScore();            
             event.target.addEventListener('mouseleave', () => {
-                selector1.classList.remove('selected');
-                selector2.classList.remove('selected');
-                selector2.removeAttribute('style')
+                //this function removes the .selected CSS and inline-style
+                removeSelected(selector1, selector2);
                 clickedTwice = false;                               
             }, {once: true});            
             if(remainingTries === 0) {
+                selector2.removeAttribute('style')
                 let loser = document.querySelectorAll('.memory-tile')
                 console.log(loser)
                 loser.forEach((element) => {

@@ -4,7 +4,9 @@ body {
     display: flex;
     flex-direction: column;
     align-items:center;
-    /* justify-content: center; */
+    /* justify-content: center;     */
+    /* user-select disables text highlighting */
+    user-select: none;    
     
 }
 
@@ -32,7 +34,7 @@ h1 {
     background-color: red;
     border: 5px solid black;
     color: white;
-    border-radius: 10px;   
+    border-radius: 10px;     
 }
 
 .game-window {
@@ -42,9 +44,7 @@ h1 {
     width: 400px;
     display: flex;
     flex-wrap: wrap;    
-    background-image: url(instructions.png);
-    /* user-select disables text highlighting */
-    user-select: none;    
+    background-image: url(assets/instructions.png);    
     /* justify-content: space-evenly;
     align-content: space-evenly; */
 }
@@ -70,9 +70,9 @@ h1 {
 
 .selected{
     color: black;
-    background-color: yellow;
+    background-color:rgb(203, 218, 33);
     pointer-events: none;
-    background-image: url(trial1/wizard.png);
+    background-image: url(trial1/wizard.png);    
 }
 
 .solved {
@@ -87,12 +87,12 @@ h1 {
 
 .winner {
     background-color: blueviolet;
-    background-image: url(victory-stars.png);
+    background-image: url(assets/victory-stars.png);
     border: none;
     pointer-events: none;
 }
 .loser {
     background-color: red;    
-    background-image: url(loss-skull.png);
+    background-image: url(assets/loss-skull.png);
     pointer-events: none;
 }
