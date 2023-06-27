@@ -18,9 +18,14 @@ button {
     border: 5px solid black;
     color: white;
     border-radius: 10px;
-    font-size: 18px; 
+    font-size: 18px;
+    transform: scale(1); 
 }
-
+button:active{
+    transform: scale(0.95);
+    transition: transform .3s;
+}
+       
 p {
     font-size: 18px;
     font-weight: bold;
@@ -65,22 +70,33 @@ h1 {
     color: white;
     color: transparent;
     background-color: red; 
-    font-size: 30px;       
+    font-size: 30px;    
+    transition: 200ms;      
+}
+.memory-tile:hover {
+    transform: translateY(-1px);
+    /* background-color: rgb(211, 0, 0); */
 }
 
 .selected{
     color: black;
-    background-color:rgb(203, 218, 33);
-    pointer-events: none;
-    background-image: url(trial1/wizard.png);    
+    /* background-color:rgb(59, 186, 186); */
+    background-color: rgb(255, 166, 0);
+    pointer-events: none;    
+    transition: 200ms;
+}
+.selected:hover{
+    transform: translateY(2px);
+    transition: .2s;
 }
 
 .solved {
     background-color: green;
     pointer-events: none;
     color: transparent;
-    background-image: transparent;
+    background-image: url(assets/check-mark.png);
 }
+
 .horz-aligned {
     display: flex;      
 }

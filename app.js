@@ -150,7 +150,7 @@ resetButton.addEventListener("click", () => {
     objectArray = [];
     console.log(objectArray);
     victoryCount = 0;
-    remainingTries = 5;
+    remainingTries = 10;
     keepScore();
     scoreboard.textContent = '';
 })
@@ -168,6 +168,7 @@ let key2 = 0;
 // these booleans keep track of which click is currently active to prevent double clicking the same tile being a success case
 let hasClicked = false;
 let clickedTwice = false;
+let clickLock = false;
 
 //these variables keep track of the game and the win/loss conditions 
 let victoryCount = 0;
@@ -187,7 +188,7 @@ function keepScore(){
 let gameBoard = document.querySelector('.game-window');
 gameBoard.addEventListener('click', (event) => {
     // first click happens
-    if(!hasClicked && !clickedTwice){
+    if(!hasClicked && !clickedTwice && !clickLock){
     // enter this as the first loop
         selector1 = event.target;
         key1 = objectArray[event.target.id].key;
@@ -196,7 +197,7 @@ gameBoard.addEventListener('click', (event) => {
         hasClicked = true;
     }
     //second click goes here
-    else if(hasClicked){        
+    else if(hasClicked && !clickLock){        
     // we set hasClicked to true at the end of the first click so the second click will go here
         selector2 = event.target;
         key2 = objectArray[event.target.id].key;        
@@ -205,21 +206,27 @@ gameBoard.addEventListener('click', (event) => {
         //////////////////
         // pair success //
         //////////////////               
-        if (key1 === key2){            
-            selector1.classList.add('solved');
-            selector2.classList.add('solved');            
-            //this function removes the .selected CSS and inline-style
-            removeSelected(selector1, selector2);
-            //victory condition logic and display
-            victoryCount++;
-            if(victoryCount === keyArray.length) {
-                let winner = document.querySelectorAll('.solved')
-                console.log(winner)
-                winner.forEach((element) => {
-                    element.classList.add('winner')
-                })
-                scoreboard.textContent = `YOU WIN :)`;
-            }   
+        if (key1 === key2){
+            clickLock = true;
+            // this timeout function lets you see the solved answer for a second before it swaps to green
+            setTimeout(function(){
+                selector1.classList.add('solved');
+                selector2.classList.add('solved');
+                //this function removes the .selected CSS and inline-style
+                removeSelected(selector1, selector2);
+                //victory condition logic and display
+                victoryCount++;
+                if(victoryCount === keyArray.length) {
+                    let winner = document.querySelectorAll('.solved')
+                    console.log(winner)
+                    winner.forEach((element) => {
+                        element.classList.add('winner')
+                    })
+                    scoreboard.textContent = `YOU WIN :)`;
+                }
+                clickLock = false;  
+            }, 200);
+            
         }            
         //////////////////
         // pair failure //
@@ -245,31 +252,7 @@ gameBoard.addEventListener('click', (event) => {
             }
         }
         // reset hasClicked back to false so the first click can start again.
-        hasClicked = false;
+        hasClicked = false;        
     }      
 });
 
-// thoughts on solution to current problem -- first event saves its target, then runs a function
-// this function removes the first event listener then adds a new one
-// ALTERNATE solution, set boolean, if not active use event listener,  
-
-
-// what if i set the background image to the symbols from the array
-
-// Click on a tile
-// Event listener => get tile ID and display the key from the same index in the object array
-// either as innerHTML or as a seperate class of tile in CSS
-// objectArray[tileID].key
-
-// Click a second tile
-// Event listener => Same process to display the key
-
-// IF BOTH KEYS ARE THE SAME
-// Add solved class to the tiles
-// ELSE IF KEYS ARE DIFFERENT
-// update the chances left count (loss condition)
-// transition the tiles back to a preselected state
-///////////
-// WHEN WE LOSE
-///////////
-// forEach add skull image background to the memory-tile class and set to no pointer
