@@ -19,11 +19,18 @@ h1 {
     width: 400px;
     display: flex;
     flex-wrap: wrap;
+    background-image: url(instructions.png);
     /* user-select disables text highlighting */
     user-select: none;
     /* justify-content: space-evenly;
     align-content: space-evenly; */
 }
+/* this is a way to add text to the background of a div  */
+
+/* .game-window:after {
+    font-size: 24px;
+    content: "Under each square is a hidden symbol. Each symbol has a twin. Click two squares to pair them. Pair all the twins to win. Three wrong guesses and you lose. How good is your memory? Start to begin. Reset to clear the board."
+} */
 
 .memory-tile {
     border: 1px solid black;

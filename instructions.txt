@@ -1,0 +1,10 @@
+Under each square is a hidden symbol.
+Each symbol has a twin.
+Click two squares to pair them.
+Pair all the twins to win.
+Three wrong guesses and you lose.
+
+How good is your memory?
+
+Start to begin.
+Reset to clear the board.

@@ -132,13 +132,19 @@ resetButton.addEventListener("click", () => {
 let gameBoard = document.querySelector('.game-window');
 gameBoard.addEventListener('click', (event) => {
     console.log(event.target.id)
+    //stores the selected div and its key value
     let selector1 = event.target;
     let key1 = objectArray[event.target.id].key
     console.log(key1)
+    console.log('first event.target:')
     console.dir(event.target)
+    //adds the selected css class to the clicked tile for style   
     event.target.classList.add('selected')
+    // attempt to listen to second event
     gameBoard.addEventListener('click', (event) => {
         console.log('we got here')
+        console.log('second event.target:')
+        console.dir(event)
         let selector2 = event.target;
         let key2 = objectArray[event.target.id].key
         if (key1 === key2){
@@ -155,6 +161,12 @@ gameBoard.addEventListener('click', (event) => {
     })
 });
 
+// thoughts on solution to current problem -- first event saves its target, then runs a function
+// this function removes the first event listener then adds a new one
+// ALTERNATE solution, set boolean, if not active use event listener,  
+
+
+// what if i set the background image to the symbols from the array
 
 // Click on a tile
 // Event listener => get tile ID and display the key from the same index in the object array
