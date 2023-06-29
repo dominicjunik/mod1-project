@@ -41,8 +41,6 @@ class memoryObject {
     constructor(key, img){
         // a key value to check against its paired sibling
         this.key = key;
-        // boolean for solved puzzle (not sure this is needed)
-        this.solved = false;
         // an img url to use
         this.img = img; 
     }
@@ -87,7 +85,8 @@ function createTiles() {
     for(let i = 0; i < objectArray.length; i++){
         let parentBox = document.querySelector('.game-window');
         let newTile = document.createElement('div');
-        newTile.setAttribute('class', 'memory-tile');          
+        newTile.setAttribute('class', 'memory-tile');
+        // adds a unique ID to each visual tile to link with the objectArray        
         newTile.setAttribute('id', i);
 
         // diagnostic line to show the key-pair directly on the tiles  
@@ -98,13 +97,13 @@ function createTiles() {
 }
 
 // this function is to add the seleced CSS class and attach an background image to the tile
-function addSelected(selector) {
+function addSelectedClass(selector) {
     selector.classList.add('selected');
     // add the background image - we need to get it from the keyArray Object
     selector.style.backgroundImage = `url('${objectArray[selector.id].img}')`   
 }
 // this funtion is to remove the .selected CSS class and to remove the inline style background img
-function removeSelected(selectorOne, selectorTwo) {
+function removeSelectedClass(selectorOne, selectorTwo) {
     selectorOne.classList.remove('selected');
     selectorOne.removeAttribute('style');
     selectorTwo.classList.remove('selected');
@@ -151,7 +150,6 @@ resetButton.addEventListener("click", () => {
     console.log(objectArray);
     victoryCount = 0;
     remainingTries = 10;
-    keepScore();
     scoreboard.textContent = '';
 })
 
@@ -193,7 +191,7 @@ gameBoard.addEventListener('click', (event) => {
         selector1 = event.target;
         key1 = objectArray[event.target.id].key;
         // adding the .selected to the clicked box
-        addSelected(selector1);
+        addSelectedClass(selector1);
         hasClicked = true;
     }
     //second click goes here
@@ -202,7 +200,7 @@ gameBoard.addEventListener('click', (event) => {
         selector2 = event.target;
         key2 = objectArray[event.target.id].key;        
         // adding the .selected to the clicked box         
-        addSelected(selector2);        
+        addSelectedClass(selector2);        
         //////////////////
         // pair success //
         //////////////////               
@@ -213,12 +211,11 @@ gameBoard.addEventListener('click', (event) => {
                 selector1.classList.add('solved');
                 selector2.classList.add('solved');
                 //this function removes the .selected CSS and inline-style
-                removeSelected(selector1, selector2);
+                removeSelectedClass(selector1, selector2);
                 //victory condition logic and display
                 victoryCount++;
                 if(victoryCount === keyArray.length) {
-                    let winner = document.querySelectorAll('.solved')
-                    console.log(winner)
+                    let winner = document.querySelectorAll('.solved')                    
                     winner.forEach((element) => {
                         element.classList.add('winner')
                     })
@@ -238,13 +235,12 @@ gameBoard.addEventListener('click', (event) => {
             keepScore();            
             event.target.addEventListener('mouseleave', () => {
                 //this function removes the .selected CSS and inline-style
-                removeSelected(selector1, selector2);
+                removeSelectedClass(selector1, selector2);
                 clickedTwice = false;                               
             }, {once: true});            
             if(remainingTries === 0) {
                 selector2.removeAttribute('style')
                 let loser = document.querySelectorAll('.memory-tile')
-                console.log(loser)
                 loser.forEach((element) => {
                     element.classList.add('loser')
                 })
@@ -253,6 +249,6 @@ gameBoard.addEventListener('click', (event) => {
         }
         // reset hasClicked back to false so the first click can start again.
         hasClicked = false;        
-    }      
+    };      
 });
 
