@@ -29,7 +29,7 @@ let keyArray = [
                     {key: 0, img: 'assets/eye.png'},
                     {key: 1, img: 'assets/pink-star.png'},
                     {key: 2, img: 'assets/crown.png'},
-                    {key: 3, img: 'assets/magic-rune.png'},
+                    {key: 3, img: 'assets/black-cat.png'},
                     {key: 4, img: 'assets/flower.png'},
                     {key: 5, img: 'assets/hourglass.png'},
                     {key: 6, img: 'assets/cloud.png'},

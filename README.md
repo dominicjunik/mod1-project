@@ -35,20 +35,21 @@ Images created in Paint 3D
 
 - The visual elements of the game are manipulated by CSS classes and by injecting in-line style tags for the individual background images. These images were created as .PNG files to allow for transparent backgrounds.
 
-- The game uses logic gates, event listeners, and CSS to enforce the rules and prevent inproper solve cases for matching tiles. Example: Clicking the same tile would count as a match because every tile has the same key as itself. Adding **pointer-events: none;** to the .selected CSS class prevents this from happening.
+- The game uses logic gates, event listeners, and CSS to enforce the rules and prevent inproper solve cases for matching tiles. Example: Clicking the same tile would count as a match because every tile has the same key as itself. Adding **pointer-events: none;** to the **.selected** CSS class prevents this from happening.
 ### Not Yet Implemented: 
 - Device scaling: The game is currently coded using fixed pixel amounts. A size of **400 x 400 pixels** was chosen to support most mobile devices vertically. The game could be scaled by changing the units of CSS boxes from **pixels** to a dynamic unit like **em** or **fr**.
-- More Tiles: Currently the game is fixed to generate 16 tiles, however, the code was created such that any number of new symbols can be added to the array. The variable `keyArray` stores the keypair (logic) and symbol (image) in objects that will be generated into pairs of tiles using the `generateLogicBoard()` and `generateTiles()` functions. All that is required is to add more objects to the keyArray and scale up the size of the `.game-window` to align them into a square.
+
+- More Tiles: Currently the game is fixed to generate 16 tiles, however, the code was created such that any number of new symbols can be added to the array. The variable `keyArray` stores the keypair (logic) and symbol (image) in objects that will be generated into pairs of tiles using the `generateLogicBoard()` and `generateTiles()` functions. All that is required is to add more objects to the `keyArray` and to scale up the size of the `.game-window` to align the tiles into a square.
 
 
 
-## Installation
+## How to Play
 This game is hosted on GitHub Pages. [Follow this link](https://dominicjunik.github.io/mod1-project/) and press start to play.
 
 ## Credits
 The Fisher-Yates Shuffle was found [here](https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array)
 
-[This Project](https://marina-ferreira.github.io/tutorials/js/memory-game/) provided inspiration for the logic gates to limit the `'click' - eventListeners`. Some of the cool features that they used that were not in my game were: 
+[This Project](https://marina-ferreira.github.io/tutorials/js/memory-game/) provided inspiration for the logic gates to limit the `'click' - eventListeners`. Some of the cool features that they used that were not included in my game are: 
 - `transform: rotateY(180deg)` to visually *flip* the game tiles
 - The `data-` CSS class to store game logic information on the `html <div>` tiles themselves
 - using a randomly generated CSS `order` on each tile to randomize their `flexbox` position. 
