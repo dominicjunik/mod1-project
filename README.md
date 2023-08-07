@@ -3,6 +3,9 @@ The objective of this project was to create a game using JavaScript, CSS, and HT
 
 The game generates a board of tiles each with its own hidden symbol. Each symbol has a pair. The player must match every pair of symbols together to win. The player is only allowed a certain number of incorrect guesses before they lose. 
 
+## How to Play
+This game is hosted on GitHub Pages. [Follow this link](https://dominicjunik.github.io/mod1-project/) and press start to play.
+
 ## Motivation
 This is the final project of the first module of my Software Engineering bootcamp. 
 
@@ -41,10 +44,6 @@ Images created in Paint 3D
 
 - More Tiles: Currently the game is fixed to generate 16 tiles, however, the code was created such that any number of new symbols can be added to the array. The variable `keyArray` stores the keypair (logic) and symbol (image) in objects that will be generated into pairs of tiles using the `generateLogicBoard()` and `generateTiles()` functions. All that is required is to add more objects to the `keyArray` and to scale up the size of the `.game-window` to align the tiles into a square.
 
-
-
-## How to Play
-This game is hosted on GitHub Pages. [Follow this link](https://dominicjunik.github.io/mod1-project/) and press start to play.
 
 ## Credits
 The Fisher-Yates Shuffle was found [here](https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array)
